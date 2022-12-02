@@ -19,10 +19,18 @@
           use-input
           input-debounce="0"
           label="Language"
-          :options="languageOptions"
+          :options="languages"
           @filter="filterFn"
           style="width: 250px"
           behavior="menu"
+        />
+        <q-btn
+          push
+          color="primary"
+          round
+          icon="autorenew"
+          class="offset-1"
+          @click="switchLanguage"
         />
         <q-select
           v-model="outputLanguage"
@@ -53,7 +61,7 @@
         <q-input
           autogrow
           outlined
-          disable
+          disabled
           color="orange"
           v-model="output"
           type="textarea"
@@ -62,13 +70,15 @@
           style="overflow: auto"
         />
       </div>
-      <q-btn
-        push
-        color="white"
-        text-color="primary"
-        label="Push"
-        @click="sendForTranslation"
-      />
+      <div class="fit row wrap justify-center content-start">
+        <q-btn
+          push
+          color="white"
+          text-color="primary"
+          label="Translate"
+          @click="sendForTranslation"
+        />
+      </div>
     </q-page-container>
   </q-layout>
 </template>
@@ -87,27 +97,51 @@ export default {
   data() {
     return { languages: [], input: "", languageOptions: [] };
   },
-  beforeMount() {
+  created() {
     const path = "http://localhost:8080/get-languages";
-    this.$axios.get(path).then(
-      (res) => {
+    this.$axios
+      .get(path)
+      .then((res) => {
         this.languages = res.data;
-        this.languageOptions = this.languages;
-        console.log(res);
-      },
-      (error) => {
-        console.error(error);
-      }
-    );
+        this.languageOptions = res.data;
+        console.log("Languages", res);
+      })
+      .catch((err) => {
+        this.$q.notify({
+          position: this.notificationsPos,
+          icon: "warning",
+          type: "negative",
+          multiLine: true,
+          message: "An error occurred: " + err,
+        });
+      });
   },
   methods: {
     sendForTranslation() {
       const url = "http://localhost:8080/get-translation";
+
+      if (this.inputLanguage == this.outputLanguage) {
+        this.$q.notify({
+          position: this.notificationsPos,
+          icon: "warning",
+          type: "negative",
+          multiLine: true,
+          message:
+            "You're trying to translate from " +
+            this.inputLanguage +
+            " to " +
+            this.outputLanguage +
+            "!",
+        });
+      }
       this.$axios
         .post(url, {
           source_lang: this.inputLanguage,
           target_lang: this.outputLanguage,
           source_text: this.input,
+        })
+        .then((res) => {
+          this.output = res.data;
         })
         .catch((err) => {
           this.$q.notify({
@@ -115,17 +149,21 @@ export default {
             icon: "warning",
             type: "negative",
             multiLine: true,
-            message: "Возникла ошибка!",
+            message: "An error occurred: " + err,
           });
         });
     },
+
+    switchLanguage() {
+      let tmp = this.inputLanguage;
+      this.inputLanguage = this.outputLanguage;
+      this.outputLanguage = tmp;
+    },
+
     filterFn(val, update) {
       if (val === "") {
         update(() => {
           this.languageOptions.value = this.languages;
-
-          // here you have access to "ref" which
-          // is the Vue reference of the QSelect
         });
         return;
       }

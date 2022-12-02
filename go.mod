@@ -1,4 +1,4 @@
-module github.com/tanya-lyubimaya/translate
+module github.com/tanya-lyubimaya/translator
 
 go 1.18
 
