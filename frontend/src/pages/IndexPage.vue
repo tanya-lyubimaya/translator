@@ -86,6 +86,8 @@
 <script>
 import { ref } from "vue";
 
+const axios = require("axios");
+
 export default {
   setup() {
     return {

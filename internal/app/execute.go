@@ -2,9 +2,9 @@ package app
 
 import (
 	"errors"
-	"github.com/tanya-lyubimaya/translate/internal/delivery/http"
-	"github.com/tanya-lyubimaya/translate/internal/repository/translator"
-	"github.com/tanya-lyubimaya/translate/internal/usecase"
+	"github.com/tanya-lyubimaya/translator/internal/delivery/http"
+	"github.com/tanya-lyubimaya/translator/internal/repository/translator"
+	"github.com/tanya-lyubimaya/translator/internal/usecase"
 	"os"
 )
 

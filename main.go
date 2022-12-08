@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/tanya-lyubimaya/translate/cmd"
+	"github.com/tanya-lyubimaya/translator/cmd"
 	"log"
 )
 

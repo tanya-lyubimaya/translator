@@ -5,7 +5,7 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"github.com/tanya-lyubimaya/translate/internal/domain"
+	"github.com/tanya-lyubimaya/translator/internal/domain"
 	"io/ioutil"
 	"net/http"
 	"strings"
@@ -24,7 +24,7 @@ func New(translateUrl string, apiKey string) (*repository, error) {
 }
 
 func (r *repository) GetLanguages(ctx context.Context) ([]string, error) {
-	req, _ := http.NewRequest("GET", r.translateUrl, nil)
+	req, _ := http.NewRequest("GET", r.translateUrl+"/languages", nil)
 
 	req.Header.Add("Accept-Encoding", "application/gzip")
 	req.Header.Add("X-RapidAPI-Key", r.apiKey)
@@ -34,6 +34,8 @@ func (r *repository) GetLanguages(ctx context.Context) ([]string, error) {
 
 	defer res.Body.Close()
 	body, _ := ioutil.ReadAll(res.Body)
+
+	fmt.Println(languagesRespToSlice(body))
 
 	return languagesRespToSlice(body)
 }

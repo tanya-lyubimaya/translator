@@ -1,4 +1,4 @@
-# Quasar App (quasar-project)
+# Translator (translator-frontend)
 
 A Quasar Project
 

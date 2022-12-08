@@ -1,6 +1,6 @@
 package cmd
 
-import "github.com/tanya-lyubimaya/translate/internal/app"
+import "github.com/tanya-lyubimaya/translator/internal/app"
 
 func Execute() error {
 	application, err := app.New()

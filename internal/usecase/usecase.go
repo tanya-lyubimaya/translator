@@ -2,7 +2,7 @@ package usecase
 
 import (
 	"context"
-	"github.com/tanya-lyubimaya/translate/internal/domain"
+	"github.com/tanya-lyubimaya/translator/internal/domain"
 )
 
 type useCase struct {

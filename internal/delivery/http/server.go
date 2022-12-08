@@ -2,7 +2,7 @@ package http
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/tanya-lyubimaya/translate/internal/domain"
+	"github.com/tanya-lyubimaya/translator/internal/domain"
 	"net/http"
 	"strings"
 )
