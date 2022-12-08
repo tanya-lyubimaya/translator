@@ -1,12 +1,12 @@
 <template>
   <q-layout view="hHh lpR fFf">
     <q-header reveal elevated class="bg-primary text-white">
-      <q-toolbar>
+      <q-toolbar class="bg-green">
         <q-toolbar-title>
           <q-avatar>
-            <img src="https://cdn.quasar.dev/logo-v2/svg/logo-mono-white.svg" />
+            <img src="../../images/earth-americas-solid.svg" />
           </q-avatar>
-          Title
+          Translator
         </q-toolbar-title>
       </q-toolbar>
     </q-header>
@@ -22,12 +22,13 @@
           label="Language"
           :options="languages"
           @filter="filterFn"
+          color="orange"
           style="width: 250px"
           behavior="menu"
         />
         <q-btn
           push
-          color="primary"
+          color="orange"
           round
           icon="autorenew"
           class="offset-1"
@@ -41,6 +42,7 @@
           label="Language"
           :options="languages"
           @filter="filterFn"
+          color="orange"
           style="width: 250px"
           behavior="menu"
           class="col-4 offset-1"
@@ -78,7 +80,7 @@
         <q-btn
           push
           color="white"
-          text-color="primary"
+          text-color="orange"
           label="Translate"
           @click="sendForTranslation"
         />
