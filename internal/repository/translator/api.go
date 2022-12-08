@@ -35,8 +35,6 @@ func (r *repository) GetLanguages(ctx context.Context) ([]string, error) {
 	defer res.Body.Close()
 	body, _ := ioutil.ReadAll(res.Body)
 
-	fmt.Println(languagesRespToSlice(body))
-
 	return languagesRespToSlice(body)
 }
 

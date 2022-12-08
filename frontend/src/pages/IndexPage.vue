@@ -16,6 +16,7 @@
       <div class="fit row wrap justify-center items-center content-start">
         <q-select
           v-model="inputLanguage"
+          clearable
           use-input
           input-debounce="0"
           label="Language"
@@ -34,10 +35,12 @@
         />
         <q-select
           v-model="outputLanguage"
+          clearable
           use-input
           input-debounce="0"
           label="Language"
           :options="languages"
+          @filter="filterFn"
           style="width: 250px"
           behavior="menu"
           class="col-4 offset-1"
@@ -70,6 +73,7 @@
           style="overflow: auto"
         />
       </div>
+      <p></p>
       <div class="fit row wrap justify-center content-start">
         <q-btn
           push
@@ -86,18 +90,17 @@
 <script>
 import { ref } from "vue";
 
-const axios = require("axios");
-
 export default {
   setup() {
     return {
       output: ref(null),
       inputLanguage: ref("ru"),
       outputLanguage: ref("en"),
+      languagesAll: [],
     };
   },
   data() {
-    return { languages: [], input: "", languageOptions: [] };
+    return { input: "", languages: [] };
   },
   created() {
     const path = "http://localhost:8080/get-languages";
@@ -105,8 +108,7 @@ export default {
       .get(path)
       .then((res) => {
         this.languages = res.data;
-        this.languageOptions = res.data;
-        console.log("Languages", res);
+        this.languagesAll = res.data;
       })
       .catch((err) => {
         this.$q.notify({
@@ -162,17 +164,10 @@ export default {
       this.outputLanguage = tmp;
     },
 
-    filterFn(val, update) {
-      if (val === "") {
-        update(() => {
-          this.languageOptions.value = this.languages;
-        });
-        return;
-      }
-
+    filterFn(val, update, abort) {
       update(() => {
         const needle = val.toLowerCase();
-        this.languageOptions.value = this.languages.filter(
+        this.languages = this.languagesAll.filter(
           (v) => v.toLowerCase().indexOf(needle) > -1
         );
       });
