@@ -96,8 +96,8 @@ export default {
   setup() {
     return {
       output: ref(null),
-      inputLanguage: ref("ru"),
-      outputLanguage: ref("en"),
+      inputLanguage: ref("Russian"),
+      outputLanguage: ref("English"),
       languagesAll: [],
     };
   },
